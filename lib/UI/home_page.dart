@@ -18,52 +18,62 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-
+double h  = MediaQuery.of(context).size.height;
+double w  = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.teal,
+        backgroundColor: Colors.orange,
         centerTitle: true,
         title: Text(
           "Just Facts",
-          style: GoogleFonts.abel(fontSize: 30.0),
+          style: GoogleFonts.indieFlower(fontSize: 30.0),
         ),
       ),
-      body: ListView.builder(
-        itemCount: homeData.length,
-        itemBuilder: (context, i) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ViewFacts(
-                                nameOfTitle: '${homeData[i]['category']}')));
+      body: Stack(
+        children: [
+          Image.asset('assets/images/bghhh.jpg',
+          height: h,
+            width: w,
+            fit: BoxFit.cover,
+          ),
+          ListView.builder(
+            itemCount: homeData.length,
+            itemBuilder: (context, i) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ViewFacts(
+                                    nameOfTitle: '${homeData[i]['category']}')));
 
-                    print(homeData[i]['category']);
+                        print(homeData[i]['category']);
 
-                    categoryName = homeData[i]['category'];
+                        categoryName = homeData[i]['category'];
 
-                  },
-                  child: ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(10),
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10),
-                      ),
-                      child: Image.asset(homeData[i]['image'])),
+                      },
+                      child: ClipRRect(
+                          borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(100),
+                            bottomRight: Radius.circular(5),
+                            topLeft: Radius.circular(5),
+                            topRight: Radius.circular(5),
+                          ),
+                          child: Image.asset(homeData[i]['image'])),
+                    ),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                  ],
                 ),
-                const SizedBox(
-                  height: 10.0,
-                ),
-              ],
-            ),
-          );
-        },
+              );
+            },
+          ),
+        ],
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../main.dart';
 
@@ -32,55 +33,67 @@ class _CardViewState extends State<CardView> {
     double w = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.teal,
+        backgroundColor: Colors.orange,
         centerTitle: true,
         title: Text(
           widget.nameOfTitle,
           style: GoogleFonts.abel(fontSize: 30.0),
         ),
       ),
-      body: AnimationLimiter(
-        child: ListView.builder(
-           physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.all(8.0),
-            itemCount: dbHelper.homeCategory.length,
-            itemBuilder: (context, i) {
-              return AnimationConfiguration.staggeredList(
-                position: i,
-                duration: const Duration(seconds: 3),
-                child: SlideAnimation(
-                  verticalOffset: 44.0,
-                  child: FadeInAnimation(
-                    child: Column(
-                      children: [
-                        GestureDetector(
-                          onTap: (){
-                            showDialog(context: context, builder: (context){
-                              return const AlertDialog(
-                                  title: Icon(CupertinoIcons.share),
-                              );
-                            });
+      body: Stack(
+        children: [
+          Image.asset('assets/images/bghhh.jpg',
+            height: h,
+            width: w,
+            fit: BoxFit.cover,
+          ),
+          AnimationLimiter(
+            child: ListView.builder(
+               physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.all(8.0),
+                itemCount: dbHelper.homeCategory.length,
+                itemBuilder: (context, i) {
+                  return AnimationConfiguration.staggeredList(
+                    position: i,
+                    duration: const Duration(seconds: 2),
+                    child: SlideAnimation(
+                      verticalOffset: 44.0,
+                      child: FadeInAnimation(
+                        child: Column(
+                          children: [
+                            GestureDetector(
+                              onTap: (){
+                                Share.share('${dbHelper.homeCategory[i]['fact']}');
+                              },
+                              child: Stack(
+                                children: [
+                                  Image.asset('assets/images/bgvc.png'),
+                                  Positioned(
+                                    top:10 ,
+                                      left: 15,
+                                      right: 15,
+                                      child: Center(child: Text("${dbHelper.homeCategory[i]['fact']}",
 
-                          },
-                          child: Card(
-                            child: Container(
-                                margin: const EdgeInsets.all(10),
-                                width: w,
-                                child: Text(
-                                  "${dbHelper.homeCategory[i]['fact']}",
-                                  style: GoogleFonts.abel(fontSize: 16.0),
-                                )),
-                          ),
+                                        style: GoogleFonts.rajdhani(fontSize: 30.0,
+                                            color: Colors.white
+                                        ),
+                                      )))
+
+                                ],
+                              ),
+
+                            ),
+                            const SizedBox(
+                              height: 13.0,
+                            ),
+                          ],
                         ),
-                        const SizedBox(
-                          height: 13.0,
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              );
-            }),
+                  );
+                }),
+          ),
+        ],
       ),
     );
   }

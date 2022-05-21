@@ -33,65 +33,76 @@ class _ViewFactsState extends State<ViewFacts> {
     double w = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.teal,
+        backgroundColor: Colors.orange,
         centerTitle: true,
         title: Text(
           widget.nameOfTitle,
-          style: GoogleFonts.abel(fontSize: 30.0),
+          style: GoogleFonts.indieFlower(fontSize: 30.0),
         ),
       ),
-      body: AnimationLimiter(
-        child: ListView.builder(
-            padding: const EdgeInsets.all(8.0),
-            itemCount: dbHelper.category.length,
-            itemBuilder: (context, i) {
-              return AnimationConfiguration.staggeredList(
-                position: i,
-                duration: const Duration(seconds: 3),
-                child: SlideAnimation(
-                  verticalOffset: 44.0,
-                  child: FadeInAnimation(
-                    child: Column(
-                      children: [
-                        GestureDetector(
-                          onTap: (){
-                            Navigator.push(context,MaterialPageRoute(builder: (context)=>  CardView(nameOfTitle: '${dbHelper.category[i]['sub_cate']}',)));
-                            fact = '${dbHelper.category[i]['sub_cate']}';
-                            },
-                          child: Container(
-                            height: h * 0.1,
-                            width: w,
-                            decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.only(
-                                  bottomLeft: Radius.circular(10),
-                                  bottomRight: Radius.circular(10),
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10),
+      body: Stack(
+        children: [
+          Image.asset('assets/images/bghhh.jpg',
+            height: h,
+            width: w,
+            fit: BoxFit.cover,
+          ),
+          AnimationLimiter(
+            child: ListView.builder(
+                padding: const EdgeInsets.all(8.0),
+                itemCount: dbHelper.category.length,
+                itemBuilder: (context, i) {
+                  return AnimationConfiguration.staggeredList(
+                    position: i,
+                    duration: const Duration(seconds: 2),
+                    child: SlideAnimation(
+                      verticalOffset: 44.0,
+                      child: FadeInAnimation(
+                        child: Column(
+                          children: [
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.push(context,MaterialPageRoute(builder: (context)=>  CardView(nameOfTitle: '${dbHelper.category[i]['sub_cate']}',)));
+                                fact = '${dbHelper.category[i]['sub_cate']}';
+                                },
+                              child: Container(
+                                height: h * 0.1,
+                                width: w,
+                                decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.only(
+
+                                      bottomLeft: Radius.circular(30),
+                                      bottomRight: Radius.circular(5),
+                                      topLeft: Radius.circular(5),
+                                      topRight: Radius.circular(5),
+                                    ),
+                                  border: Border.all(
+                                  width: 5,
+                                    color: Colors.orange,
+                                  )
                                 ),
-                              border: Border.all(
-                              width: 5,
-                                color: Colors.teal,
-                              )
-                            ),
-                            child: Center(
-                              child: Text(
-                                "${dbHelper.category[i]['sub_cate']}",
-                                style: GoogleFonts.allura(
-                                  fontSize: 25.0,
+                                child: Center(
+                                  child: Text(
+                                    "${dbHelper.category[i]['sub_cate']}",
+                                    style: GoogleFonts.rajdhani(
+                                      fontSize: 30.0,
+                                      color: Colors.white
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
+
+                        const    SizedBox(height: 13.0,),
+
+                          ],
                         ),
-
-                    const    SizedBox(height: 13.0,),
-
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-              );
-            }),
+                  );
+                }),
+          ),
+        ],
       ),
     );
   }
